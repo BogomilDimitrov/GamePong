@@ -104,9 +104,4 @@ public class Game extends Canvas implements Runnable {
 		g.dispose();
 		bs.show();
 	} //END render method
-
-	public static void main(String[] args) {
-		Game game = new Game();
-		game.start();
-	}//END main method
 }
