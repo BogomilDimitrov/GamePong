@@ -9,13 +9,15 @@ public class MainMenu extends JFrame{
 	private static final long serialVersionUID = 1L;
 	
 	int screenWidth = 250;
-	int screenHeigth = 150;
+	int screenHeigth = 230;
 	
 	int buttonWidth = 100;
 	int buttonHeigth = 40;
 	
 	JButton Play, Quit;
 	JCheckBox twoPlayer;
+	JCheckBox hardDifficulty;
+	JCheckBox hackerDifficulty;
 
 	public MainMenu(){
 		
@@ -26,12 +28,16 @@ public class MainMenu extends JFrame{
 		
 		Play.setBounds((screenWidth - buttonWidth) / 2, 5, buttonWidth, buttonHeigth); //Position the PLAY button
 		Quit.setBounds((screenWidth - buttonWidth) / 2, 50, buttonWidth, buttonHeigth); //Position the QUIT button
-		twoPlayer.setBounds((screenWidth - buttonWidth) / 2, 95, buttonWidth*2, buttonHeigth); //Position the twoPlayer check box
+		twoPlayer.setBounds(50, 95, buttonWidth*2, buttonHeigth); //Position the twoPlayer check box
+		hardDifficulty.setBounds(50, 125, buttonWidth*2, buttonHeigth); //Position the hardDifficulty check box
+		hackerDifficulty.setBounds(50, 155, buttonWidth*2, buttonHeigth); //Position the hardDifficulty check box
 		
 		//Adding buttons
 		getContentPane().add(Play); //Add the button to the JFrame
 		getContentPane().add(Quit); //Add the button to the JFrame
 		getContentPane().add(twoPlayer); //Add the button to the JFrame
+		getContentPane().add(hardDifficulty); //Add the button to the JFrame
+		getContentPane().add(hackerDifficulty); //Add the button to the JFrame
 		
 		//JFrame stuff
 		pack();
@@ -47,6 +53,8 @@ public class MainMenu extends JFrame{
 		Play = new JButton("Play");
 		Quit = new JButton("Quit");
 		twoPlayer = new JCheckBox("Two Plyers?");
+		hardDifficulty = new JCheckBox("Hardcore mode?");
+		hackerDifficulty = new JCheckBox("Are you a softuni hacker?");
 	}
 	
 	private void addActions(){
@@ -58,8 +66,18 @@ public class MainMenu extends JFrame{
 				
 				if (twoPlayer.isSelected()) {
 					game.ai.isTwoPlayer = true;
-				}else{
+				}else {
 					game.ai.isTwoPlayer = false;
+				}
+				if (hardDifficulty.isSelected()) {
+					game.isHardcore = true;
+				}else {
+					game.isHardcore = false;
+				}
+				if (hackerDifficulty.isSelected()) {
+					game.isHacker = true;
+				}else {
+					game.isHacker = false;
 				}
 				
 				game.start();

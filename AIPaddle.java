@@ -7,7 +7,8 @@ public class AIPaddle {
 	int y;
 	int width = 15;
 	int heigth = 40;
-	int speed = 2;
+	int speed = 3;
+	int closestBall;
 
 	boolean isTwoPlayer = false;
 
@@ -28,12 +29,35 @@ public class AIPaddle {
 		boundingBox.setBounds(x, y, width, heigth);
 
 		if (!isTwoPlayer) {
-
-			if (game.ball.y < y && y >= 0) {
-				y -= speed;
-			} else if (game.ball.y > y && y <= game.getHeight() - heigth) {
-				y += speed;
+			
+			if (game.isHardcore) {
+				if ((game.ball.y < y && y >= 0 && game.ball.x > game.ball2.x)||
+					(game.ball2.y < y && y >= 0 && game.ball2.x > game.ball.x)) {
+					y -= speed;
+				} else if ((game.ball.y > y && y <= game.getHeight() - heigth && game.ball.x > game.ball2.x)||
+						   (game.ball2.y > y && y <= game.getHeight() - heigth && game.ball2.x > game.ball.x)) {
+					y += speed;
+				}
+			}else if (game.isHacker) {
+				if ((game.ball.y < y && y >= 0 && (game.ball.x > game.ball2.x)&&(game.ball.x > game.ball3.x))||
+					(game.ball2.y < y && y >= 0 && (game.ball2.x > game.ball.x)&&(game.ball2.x > game.ball3.x))||
+					(game.ball3.y < y && y >= 0 && (game.ball3.x > game.ball2.x)&&(game.ball3.x > game.ball.x))) {
+					
+						y -= speed;
+					} else if ((game.ball.y > y && y <= game.getHeight()-heigth && (game.ball.x > game.ball2.x)&&(game.ball.x > game.ball3.x))||
+							(game.ball2.y > y && y <= game.getHeight()-heigth && (game.ball2.x > game.ball.x)&&(game.ball2.x > game.ball3.x))||
+							(game.ball3.y > y && y <= game.getHeight()-heigth && (game.ball3.x > game.ball2.x)&&(game.ball3.x > game.ball.x))) {
+						y += speed;
+					}
+			}else {
+				if (game.ball.y < y && y >= 0) {
+					y -= speed;
+				} else if (game.ball.y > y && y <= game.getHeight() - heigth) {
+					y += speed;
+				}
 			}
+
+			
 		}else {
 			if (goingUp && y > 0){
 				y -= speed;

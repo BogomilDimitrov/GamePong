@@ -8,7 +8,7 @@ public class PlayerPaddle {
 	int y;
 	int width = 15;
 	int heigth = 40;
-	int speed = 2;
+	int speed = 3;
 	
 	Rectangle boundingBox;
 	

@@ -1,2 +1,0 @@
-INDEX VERSION 1.126+C:\Users\Bi0GaMe\Documents\GitHub\GamePong\.metadata\.plugins\org.eclipse.jdt.core
-2250130128.index
