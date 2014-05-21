@@ -2,10 +2,12 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
+
 import javax.swing.JFrame;
 
 public class Game extends Canvas implements Runnable {
@@ -22,12 +24,18 @@ public class Game extends Canvas implements Runnable {
 	InputHandler IH;
 
 	JFrame frame; // Sets the window of the game
-	public final int WIDTH = 400;
+	public final int WIDTH = 600;
 	public final int HEIGHT = WIDTH / 16 * 9;
 	public final Dimension gameSize = new Dimension(WIDTH, HEIGHT); // Condense WIDTH and HEIGHT in one variable
 	public final String TITLE = "Pong"; // Sets title
 
-	Image image = Toolkit.getDefaultToolkit().createImage("background.jpg");
+	Image image = Toolkit.getDefaultToolkit().createImage("normal.jpg");
+	Image imageW = Toolkit.getDefaultToolkit().createImage("pWin.jpg");
+	Image imageHard = Toolkit.getDefaultToolkit().createImage("hardcore.jpg");
+	Image imageHack = Toolkit.getDefaultToolkit().createImage("hacker.jpg");
+	Image imageAi = Toolkit.getDefaultToolkit().createImage("win.jpg");
+	Image imageTwoP = Toolkit.getDefaultToolkit().createImage("twoplayer.jpg");
+	
 
 	static boolean gameRunning = false; // Set's game running
 
@@ -77,8 +85,8 @@ public class Game extends Canvas implements Runnable {
 		player = new PlayerPaddle(10, 60);
 		ai = new AIPaddle(getWidth() - 15, 60);
 		ball = new Ball(getWidth() / 2, getHeight() / 2);
-		ball2 = new Ball2(getWidth() / 2 + 20 , getHeight() / 2 + 50);
-		ball3 = new Ball3(getWidth() / 2 + 40, getHeight() / 2 + 100);
+		ball2 = new Ball2(getWidth() / 2 + 50 , getHeight() / 2 + 50);
+		ball3 = new Ball3(getWidth() / 2 + 100, getHeight() / 2 + 100);
 
 
 	} // END Game method
@@ -104,22 +112,56 @@ public class Game extends Canvas implements Runnable {
 			return;
 		}
 		Graphics g = bs.getDrawGraphics();
-
+		g.drawImage(imageW, 0, 0, getWidth(), getHeight(), null);
+		g.drawImage(imageAi, 0, 0, getWidth(), getHeight(), null);
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
-
+		if (ai.isTwoPlayer) {
+			g.drawImage(imageTwoP, 0, 0, getWidth(), getHeight(), null);
+		}else {
+			if (isHardcore) {
+				g.drawImage(imageHard, 0, 0, getWidth(), getHeight(), null);
+			}
+			if (isHacker) {
+				g.drawImage(imageHack, 0, 0, getWidth(), getHeight(), null);
+			}
+		}
+		
 		g.setColor(Color.white);
 		g.drawString("Player 1: " + p1Score, 0, 10);
 		g.drawString("Player 2: " + p2Score, getWidth() - 70, 10);
+		
 
 		player.render(g);
 		ai.render(g);
 		ball.render(g);
+		
 		if (isHardcore) {
 			ball2.render(g);
 		}
 		if (isHacker) {
 			ball2.render(g);
 			ball3.render(g);
+		}
+
+		
+		if (p1Score == 10) {
+			g.drawImage(imageW, 0, 0, getWidth(), getHeight(), null);
+			if (ai.isTwoPlayer) {
+				g.drawImage(imageTwoP, 0, 0, getWidth(), getHeight(), null);
+			}
+			g.setColor(Color.white);
+			g.drawString("Player 1 wins!", 270, getHeight()/2 - 20);
+			gameRunning = false;
+		}else if (p2Score == 10 && !ai.isTwoPlayer) {
+			g.drawImage(imageAi, 0, 0, getWidth(), getHeight(), null);
+			g.setColor(Color.white);
+			g.drawString("AI wins!", 270, getHeight()/2 - 20);
+			gameRunning = false;
+		}else if (p2Score == 10 && ai.isTwoPlayer) {
+			g.drawImage(imageTwoP, 0, 0, getWidth(), getHeight(), null);
+			g.setColor(Color.white);
+			g.drawString("Player 2 wins!", 270, getHeight()/2 - 20);
+			gameRunning = false;
 		}
 
 		g.dispose();

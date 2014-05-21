@@ -70,11 +70,14 @@ public class MainMenu extends JFrame{
 					game.ai.isTwoPlayer = false;
 				}
 				if (hardDifficulty.isSelected()) {
+					game.ball.speed = 4;
 					game.isHardcore = true;
 				}else {
 					game.isHardcore = false;
 				}
 				if (hackerDifficulty.isSelected()) {
+					game.ball.speed = 4;
+					game.ball2.speed = 4;
 					game.isHacker = true;
 				}else {
 					game.isHacker = false;

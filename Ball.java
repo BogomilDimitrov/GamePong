@@ -1,11 +1,13 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 
 public class Ball {
 	int x, y;
-	int size = 16;
-	int speed = 3;
+	int size = 20;
+	int speed = 5;
 	int vx, vy;
 	
 	Rectangle boundingBox;
@@ -45,15 +47,24 @@ public class Ball {
 	}
 	
 	private void paddleCollide(Game game){
-		if (boundingBox.intersects(game.player.boundingBox)) {
+		if (boundingBox.intersects(game.player.boundingBox1)) {
 			vx = speed;
-		}else if (boundingBox.intersects(game.ai.boundingBox)) {
+			vy = -speed;
+		}else if (boundingBox.intersects(game.player.boundingBox2)) {
+			vx = speed;
+			vy = speed;
+		}else if (boundingBox.intersects(game.ai.boundingBox1)) {
 			vx = -speed;
+			vy = -speed;
+		}else if (boundingBox.intersects(game.ai.boundingBox2)) {
+			vx = -speed;
+			vy = speed;
 		}
 	}
 	
+	Image image = Toolkit.getDefaultToolkit().createImage("ball1.png");
+	
 	public void render(Graphics g){
-		g.setColor(Color.RED);
-		g.fillOval(x, y, size, size);
+		g.drawImage(image, x, y, size, size, null);
 	}
 }

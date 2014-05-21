@@ -1,18 +1,21 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 
 public class AIPaddle {
 	int x;
 	int y;
 	int width = 15;
-	int heigth = 40;
-	int speed = 3;
+	int heigth = 50;
+	int speed = 4;
 	int closestBall;
 
 	boolean isTwoPlayer = false;
 
-	Rectangle boundingBox;
+	Rectangle boundingBox1;
+	Rectangle boundingBox2;
 
 	boolean goingUp = false;
 	boolean goingDown = false;
@@ -21,12 +24,16 @@ public class AIPaddle {
 		this.x = x;
 		this.y = y;
 
-		boundingBox = new Rectangle(x, y, width, heigth);
-		boundingBox.setBounds(x, y, width, heigth);
+		boundingBox1 = new Rectangle(x, y, width, 25);
+		boundingBox1.setBounds(x, y, width, 25);
+		
+		boundingBox2 = new Rectangle(x, y+25, width, 25);
+		boundingBox2.setBounds(x, y+25, width, 25);
 	}
 
 	public void tick(Game game) {
-		boundingBox.setBounds(x, y, width, heigth);
+		boundingBox1.setBounds(x, y, width, 25);
+		boundingBox2.setBounds(x, y+25, width, 25);
 
 		if (!isTwoPlayer) {
 			
@@ -68,8 +75,9 @@ public class AIPaddle {
 
 	}
 
+	Image image = Toolkit.getDefaultToolkit().createImage("spaceship2.png");
+
 	public void render(Graphics g) {
-		g.setColor(Color.BLUE);
-		g.fillRect(x, y, width, heigth);
+		g.drawImage(image, x, y, width, heigth, null);
 	}
 }
